@@ -64,6 +64,7 @@
                     <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="decimalPad" keyboardAppearance="alert" returnKeyType="go"/>
                     <connections>
                         <action selector="AmountTextEditingBegan:" destination="-1" eventType="editingDidBegin" id="9of-dh-N9e"/>
+                        <action selector="BillAmountEdited:" destination="-1" eventType="editingDidEnd" id="XkZ-Lg-nDj"/>
                     </connections>
                 </textField>
                 <label appearanceType="aqua" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XLu-xP-9uW">

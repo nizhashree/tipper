@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *ActualAmountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *TipPercentageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *TotalAmountPerPersonLabel;
+- (IBAction)BillAmountEdited:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *SharingButton;
 @property SettingsViewController *svc;
 @property int RoundUpLimit;
@@ -38,6 +39,9 @@
 @end
 
 @implementation TipViewController
+{
+    NSUserDefaults *defaults;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,6 +49,7 @@
     if (self) {
         self.title = @"Tipper";
     }
+    defaults = [NSUserDefaults standardUserDefaults];
     self.svc = [[SettingsViewController alloc] init];
     self.svc.edgesForExtendedLayout = UIRectEdgeNone;
     self.SharingPreferenceIndex = 0;
@@ -68,9 +73,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self set_initial_bill_amount];
     [self updateTip];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self  action: @selector(goToSettingsController)];
     [self.BillTextField becomeFirstResponder];
+}
+
+- (void) set_initial_bill_amount
+{
+   float initial_bill_amount = [defaults floatForKey:@"tipCalculator.initial_bill_amount"];
+    NSDate * initial_bill_amount_date = (NSDate *)[defaults objectForKey:@"tipCalculator.initial_bill_amount_timestamp"];
+     float timeDiff = [[NSDate date] timeIntervalSinceDate:initial_bill_amount_date];
+    if (timeDiff > 600)
+    {
+        self.BillTextField.text = @"0.00";
+        [defaults setFloat:0.00 forKey:@"tipCalculator.initial_bill_amount"];
+    }
+    else if (initial_bill_amount > 0)
+        self.BillTextField.text = [NSString stringWithFormat:@"$%0.2f", initial_bill_amount];
 }
 
 - (void)didReceiveMemoryWarning
@@ -130,6 +150,7 @@
     [self constructSharingButtonText];
     [self displayPerPersonLabels:totalAmount ];
 }
+
 - (void) setRoundOffFields:(float) amount
 {
     if(self.RoundUpLimit != 0){
@@ -176,4 +197,14 @@
         return ceil(totalAmount) + self.RoundUpLimit - 1;
     }
 }
+- (IBAction)BillAmountEdited:(id)sender {
+    float billAmount = [[self ParseAmountToFloat] floatValue];
+    if (billAmount > 0)
+    {
+        [defaults setFloat:billAmount forKey:@"tipCalculator.initial_bill_amount"];
+        [defaults setObject:[[NSDate alloc] init] forKey:@"tipCalculator.initial_bill_amount_timestamp"];
+        [defaults synchronize];
+    }
+}
+
 @end
