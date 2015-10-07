@@ -28,12 +28,13 @@ The following **additional** features are implemented:
 * [x] The main page shows the initial amount, Tip value along with tip percentage selected , Round off value along with default Round off value, Sharing count (if not selected, it is displayed as none), total amount and amount per person ( in case of sharing count > 1 alone.)
 * [x] The default tip percentage view has options listed as a table with a tick mark on the right end showing the current selection. Same goes for rounding off too
 * [x] Currency symbol is prepended automatically after entering initial amount.
+* [x] Truncating of bill amount to 2 decimals is also done
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/t2YIbW1.gif' title='Video Walkthrough' width='200' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/tYDBMiI.gif' title='Video Walkthrough' width='200' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
